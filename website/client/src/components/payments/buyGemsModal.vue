@@ -450,6 +450,7 @@ export default {
       return {
         name: currentEvent.event,
         class: currentEvent.gemsPromo ? `event-${currentEvent.event}` : '',
+        gemsPromo: currentEvent.gemsPromo,
         promo: currentEvent.promo,
         startMonth: moment(currentEvent.start).format('MMMM'),
         startOrdinal: moment(currentEvent.start).format('Do'),
@@ -462,12 +463,7 @@ export default {
       };
     },
     isGemsPromoActive () {
-      const currEvt = this.currentEvent;
-      if (currEvt && currEvt.gemsPromo && moment().isBefore(currEvt.end)) {
-        return true;
-      }
-
-      return false;
+      return Boolean(this.eventInfo);
     },
     gemsBlocks () {
       // We don't want to modify the original gems blocks when a promotion is running
@@ -482,7 +478,7 @@ export default {
         if (this.isGemsPromoActive) {
           newBlock.originalGems = originalBlock.gems;
           newBlock.gems = (
-            this.currentEvent.gemsPromo[gemsBlockKey] || originalBlock.gems
+            this.eventInfo.gemsPromo[gemsBlockKey] || originalBlock.gems
           );
         }
       });
