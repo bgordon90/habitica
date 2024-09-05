@@ -43,8 +43,11 @@ export const QuestHelperMixin = {
         }
 
         if (item.type === 'quests') {
-          const questScroll = this.content.quests[item.key];
-          console.log(questScroll);
+          const questScroll = {};
+          Object.assign(questScroll, this.content.quests[item.key]);
+          questScroll.type = 'quests';
+          questScroll.text = item.text();
+          questScroll.onlyOwner = { item };
           return questScroll;
         }
 
